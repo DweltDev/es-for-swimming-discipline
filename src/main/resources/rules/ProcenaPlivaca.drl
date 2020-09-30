@@ -1,0 +1,492 @@
+package osnovna_pravila;
+
+import com.sample.Plivac;
+import com.sample.Disciplina;
+
+rule "Plivac nije eksplozivan"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(eksplozivan  == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("50m","kratka","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		update(a);
+		
+end
+
+rule "Plivac je eksplozivan"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(eksplozivan  == true)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("200,400m","srednja","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Plivac nije izdrzljiv"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(izdrzljiv   == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("200,400m","srednja","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Plivac nije fleksibilan"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(fleksibilan   == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("50m","kratka","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		update(a);
+		
+end
+
+rule "Ako plivac nije fleksibilan, ne trebaju pitanja za tehniku"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(fleksibilan   == false)
+	then 
+		retract("Plivac nije perfekcionista za tehniku");
+		retract("Plivac ne pliva prsno");
+		
+end
+
+rule "Ako plivac nije visok, ne moze plivati prsno"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(visok == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		
+end
+
+rule "Plivac nije perfekcionista za tehniku"
+	no-loop
+	agenda-group "tehnika-karakteristike"
+	when
+		a: Plivac(perfekcionistaZaTehniku    == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		update(a);
+		
+end
+
+rule "Plivac nije plovan"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(plovan  == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Plivac nije snažan"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(snazan   == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("200,400m","srednja","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("50m","kratka","delfin"));
+		update(a);
+		
+end
+
+rule "Ako plivac nije snažan, ne trebaju pitanja za eksplozivnost"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(snazan    == false)
+	then 
+		retract("Plivac nije eksplozivan");
+		retract("Plivac je eksplozivan");
+		
+end
+
+rule "Kategorizuj godine plivaca 1"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000
+	when
+		a: Plivac(godine < 12)
+	then 
+		a.setStarost("dete");
+end
+
+rule "Kategorizuj godine plivaca 2"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(godine >= 12 && godine < 20)
+	then 
+		a.setStarost("tinejdzer");
+end
+
+rule "Kategorizuj godine plivaca 3"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(godine >= 20 && godine < 36)
+	then 
+		a.setStarost("mladji rekreativac");
+end
+
+rule "Kategorizuj godine plivaca 4"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(godine >= 36)
+	then 
+		a.setStarost("stariji rekreativac");		
+end
+
+
+rule "Kategorizuj BMI dete 1"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000
+	when
+		a: Plivac(starost == "dete" && BMI > 24)
+	then 
+		a.setKategorijaBMI("prekomeran");
+end
+
+rule "Kategorizuj BMI dete 2"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000
+	when
+		a: Plivac(starost == "dete" && BMI <= 24)
+	then 
+		a.setKategorijaBMI("normalan");
+end
+
+rule "Kategorizuj BMI 2"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(BMI>26)
+	then 
+		a.setKategorijaBMI("prekomeran");
+end
+
+rule "Kategorizuj BMI 3"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(BMI<18)
+	then 
+		a.setKategorijaBMI("nizak");
+end
+
+rule "Kategorizuj BMI 4"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(BMI>=18 && BMI<=26 )
+	then 
+		a.setKategorijaBMI("normalan");
+end
+
+rule "Ako je BMI sportiste visok, ne moze da pliva kratke discipline ni ledjni stil"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(kategorijaBMI   == "prekomeran")
+	then 
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("50m","kratka","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		update(a);
+		
+end
+
+rule "Ako je BMI sportiste nizak, ne moze da pliva triatlon ni maratonske trke"
+	no-loop
+	agenda-group "fizicke-karakteristike"
+	when
+		a: Plivac(kategorijaBMI   == "nizak")
+	then 
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Ako plivac ima nizak BMI, ugasi pitanja za maraton i trijatlon"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(snazan    == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		retract("maraton");
+		retract("trijatlon");
+		
+end
+
+rule "Ako je plivac dete, ne moze da pliva maratonske i triatlonske trke"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(starost == "dete")
+	then
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon")); 
+		retract("maraton");
+		retract("trijatlon");
+		
+end
+
+rule "Ako je plivac tinejdzer, ne moze da pliva triatlonske trke"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(starost == "tinejdzer")
+	then
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon")); 
+		retract("trijatlon");
+		
+end
+
+rule "Ako plivac ne ume da vozi bicikl i trci dobro, ne moze da pliva triatlonske trke"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(voziBiciklITrci  == false)
+	then
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon")); 
+		retract("trijatlon");
+		
+end
+
+rule "Ako je plivac mladji rekreativac, moze da pliva kratke i maratonske trke"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(starost == "mladji rekreativac")
+	then
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("200,400m","srednja","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		retract("fizicke-karakteristike");
+		
+end
+
+rule "Ako je plivac stariji rekreativac, moze da pliva kratke i maratonske trke"
+	no-loop
+	agenda-group "meta-pravilo"
+	when
+		a: Plivac(starost == "stariji rekreativac")
+	then
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("200,400m","srednja","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		retract("fizicke-karakteristike");
+		
+end
+
+rule "Kategorizuj visinu"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(pol == "M" && visina>=190)
+	then 
+		a.setVisok(true);
+end
+
+rule "Kategorizuj visinu 2"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience 1000	
+	when
+		a: Plivac(pol == "Z" && visina>=175)
+	then 
+		a.setVisok(true);
+end
+
+rule "Plivac nije mentalno izdrzljiv"
+	no-loop
+	agenda-group "maraton"
+	when
+		a: Plivac(izdrzljiv   == false)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Plivac ne pliva prsno"
+	no-loop
+	agenda-group "meta-pravilo"
+	salience -1
+	when
+		a: Plivac(nePlivaPrsno == false)
+	then 
+		a.setNePlivaPrsno(true);
+end
+
+rule "Plivac ne pliva prsno posledica"
+	no-loop
+	agenda-group "tehnika-karakteristike"
+	salience -1
+	when
+		a: Plivac(nePlivaPrsno == true)
+	then 
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("50,100m","kratka","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("100,200","kratka","mesovito"));
+		update(a);
+		
+end
+
+rule "Ako plivac nema vise od 3 treninga nedeljno, ne moze plivati nista osim kratkih disciplina"
+	no-loop
+	when
+		a: Plivac(brojTreningaNedeljno<=3)
+	then
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","prsno"));
+		a.getDisciplinaList().remove(new Disciplina("200m","srednja","ledjno"));
+		a.getDisciplinaList().remove(new Disciplina("100,200m","srednja","delfin"));
+		a.getDisciplinaList().remove(new Disciplina("200,400m","srednja","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","duga","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("400m","srednja","mesovito"));
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Ako plivac nema vise od 5 treninga nedeljno, ne moze plivati maratone i triatlone"
+	no-loop
+	agenda-group "maraton"
+	when
+		a: Plivac(brojTreningaNedeljno<=5)
+	then
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Ako plivac ne pliva u slanoj vodi, ne moze plivati dugi triatlon ni maraton"
+	no-loop
+	agenda-group "maraton"
+	when
+		a: Plivac(plivaUSlanojVodi == false)
+	then
+		a.getDisciplinaList().remove(new Disciplina("5,10,15km","maraton","kraul"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Ako plivac nema vise od 5 godina plivackog staza ne moze plivati triatlon"
+	no-loop
+	agenda-group "triatlon"
+	when
+		a: Plivac(brojGodinaPlivackogStaza  <= 5)
+	then
+		a.getDisciplinaList().remove(new Disciplina("800,1500m","srednja","triatlon"));
+		a.getDisciplinaList().remove(new Disciplina("2,4km","dugi","triatlon"));
+		update(a);
+		
+end
+
+rule "Ako plivac ne moze da pliva nijednu disciplinu sam, moze da pliva stafetu"
+	salience -2
+	when
+		a: Plivac(disciplinaList.size()==0)
+	then
+		a.getDisciplinaList().add(new Disciplina("4x50m","kratka","stafeta"));
+		update(a);
+		
+end
+
