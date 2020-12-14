@@ -1,0 +1,115 @@
+package kategorizacija;
+
+import com.sample.Plivac;
+import com.sample.Disciplina;
+
+rule "Kategorizuj godine plivaca 1"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000
+	when
+		a: Plivac(godine < 12)
+	then 
+		a.setStarost("dete");
+end
+
+rule "Kategorizuj godine plivaca 2"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(godine >= 12 && godine < 20)
+	then 
+		a.setStarost("tinejdzer");
+end
+
+rule "Kategorizuj godine plivaca 3"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(godine >= 20 && godine < 36)
+	then 
+		a.setStarost("mladji rekreativac");
+end
+
+rule "Kategorizuj godine plivaca 4"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(godine >= 36)
+	then 
+		a.setStarost("stariji rekreativac");		
+end
+
+
+rule "Kategorizuj BMI dete 1"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000
+	when
+		a: Plivac(starost == "dete" && BMI > 24)
+	then 
+		a.setKategorijaBMI("prekomeran");
+end
+
+rule "Kategorizuj BMI dete 2"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000
+	when
+		a: Plivac(starost == "dete" && BMI <= 24)
+	then 
+		a.setKategorijaBMI("normalan");
+end
+
+rule "Kategorizuj BMI 2"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(BMI>26)
+	then 
+		a.setKategorijaBMI("prekomeran");
+end
+
+rule "Kategorizuj BMI 3"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(BMI<18)
+	then 
+		a.setKategorijaBMI("nizak");
+end
+
+rule "Kategorizuj BMI 4"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(BMI>=18 && BMI<=26 )
+	then 
+		a.setKategorijaBMI("normalan");
+end
+
+rule "Kategorizuj visinu"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(pol == "M" && visina>=190)
+	then 
+		a.setVisok(true);
+end
+
+rule "Kategorizuj visinu 2"
+	no-loop
+	agenda-group "kategorizacija"
+	salience 1000	
+	when
+		a: Plivac(pol == "Z" && visina>=175)
+	then 
+		a.setVisok(true);
+end

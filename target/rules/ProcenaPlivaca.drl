@@ -119,31 +119,6 @@ rule "Ako je BMI sportiste nizak, ne moze da pliva triatlon ni maratonske trke"
 		
 end
 
-rule "Plivac ne pliva prsno posledica"
-	no-loop
-	agenda-group "tehnika-karakteristike"
-	salience -1
-	when
-		a: Plivac(nePlivaPrsno == true)
-	then 
-		a.getDisciplina().setPrsno(false);
-		a.getDisciplina().setMesovito(false);
-		update(a);
-		
-end
-
-rule "Plivac nije perfekcionista za tehniku"
-	no-loop
-	agenda-group "tehnika-karakteristike"
-	when
-		a: Plivac(perfekcionistaZaTehniku    == false)
-	then 
-		a.getDisciplina().setPrsno(false);
-		a.getDisciplina().setMesovito(false);
-		update(a);
-		
-end
-
 rule "Ako je plivac dete, ne moze da pliva maratonske i triatlonske trke"
 	no-loop
 	when
@@ -182,6 +157,31 @@ rule "Ako je plivac stariji rekreativac, moze da pliva kratke i maratonske trke"
 		a.getDisciplina().setSrednjaDisciplina(false);
 		a.getDisciplina().setDugaDisciplina(false);
 		a.getDisciplina().setTriatlon(false);
+		
+end
+
+rule "Plivac ne pliva prsno posledica"
+	no-loop
+	agenda-group "tehnika-karakteristike"
+	salience -1
+	when
+		a: Plivac(nePlivaPrsno == true)
+	then 
+		a.getDisciplina().setPrsno(false);
+		a.getDisciplina().setMesovito(false);
+		update(a);
+		
+end
+
+rule "Plivac nije perfekcionista za tehniku"
+	no-loop
+	agenda-group "tehnika-karakteristike"
+	when
+		a: Plivac(perfekcionistaZaTehniku    == false)
+	then 
+		a.getDisciplina().setPrsno(false);
+		a.getDisciplina().setMesovito(false);
+		update(a);
 		
 end
 
