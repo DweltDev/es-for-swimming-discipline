@@ -1,8 +1,5 @@
 package com.sample;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Plivac {
 	
 	private boolean eksplozivan = false;
@@ -24,6 +21,7 @@ public class Plivac {
 	private boolean plivaUSlanojVodi = false;
 	private int brojTreningaNedeljno = 6;
 	private int brojGodinaPlivackogStaza = 6;
+	public Disciplina disciplina;
 	
 	public boolean isPlivaUSlanojVodi() {
 		return plivaUSlanojVodi;
@@ -37,7 +35,6 @@ public class Plivac {
 	public void setBrojTreningaNedeljno(int brojTreningaNedeljno) {
 		this.brojTreningaNedeljno = brojTreningaNedeljno;
 	}
-	private List<Disciplina> disciplinaList;
 	
 	public boolean isEksplozivan() {
 		return eksplozivan;
@@ -112,41 +109,6 @@ public class Plivac {
 		this.godine = godine;
 	}
 
-	public List<Disciplina> getDisciplinaList() {
-		return disciplinaList;
-	}
-	public void setDisciplinaList(List<Disciplina> disciplinaList) {
-		this.disciplinaList = disciplinaList;
-	}
-	
-	public String toString(){
-		String preporuka = "";
-		if (disciplinaList.size()==0) {
-			return "Nema preporuka za ovog plivaca";
-		}
-		for (Disciplina disciplina : disciplinaList) {
-			preporuka += "Plivacu se preporucuje "+disciplina.getTipDuzine()+"disciplina, tacnije "+disciplina.getDuzina()+" "+disciplina.getTehnika()+" stilom.\n";
-		}
-		return preporuka;
-	}
-	
-	public Plivac(){
-		disciplinaList = new LinkedList<Disciplina>();
-		disciplinaList.add(new Disciplina("50,100m","kratka","kraul"));
-		disciplinaList.add(new Disciplina("50,100m","kratka","prsno"));
-		disciplinaList.add(new Disciplina("200m","srednja","prsno"));
-		disciplinaList.add(new Disciplina("50,100m","kratka","ledjno"));
-		disciplinaList.add(new Disciplina("200m","srednja","ledjno"));
-		disciplinaList.add(new Disciplina("50m","kratka","delfin"));
-		disciplinaList.add(new Disciplina("100,200m","srednja","delfin"));
-		disciplinaList.add(new Disciplina("200,400m","srednja","kraul"));
-		disciplinaList.add(new Disciplina("800,1500m","duga","kraul"));
-		disciplinaList.add(new Disciplina("100,200","kratka","mesovito"));
-		disciplinaList.add(new Disciplina("400m","srednja","mesovito"));
-		disciplinaList.add(new Disciplina("5,10,15km","maraton","kraul"));
-		disciplinaList.add(new Disciplina("800,1500m","srednja","triatlon"));
-		disciplinaList.add(new Disciplina("2,4km","dugi","triatlon"));
-	}
 	public String getStarost() {
 		return starost;
 	}
@@ -177,4 +139,22 @@ public class Plivac {
 	public void setBrojGodinaPlivackogStaza(int brojGodinaPlivackogStaza) {
 		this.brojGodinaPlivackogStaza = brojGodinaPlivackogStaza;
 	}
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
+	@Override
+	public String toString() {
+
+		return getDisciplina().ListDiscipline();
+	}
+	public Plivac() {
+		super();
+		this.disciplina = new Disciplina();
+	}
+	
+	
+	
 }
